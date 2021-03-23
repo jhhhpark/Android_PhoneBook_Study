@@ -68,7 +68,6 @@
                 android:padding="15dp"
                 android:textSize="15sp"/>
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -76,6 +75,7 @@
         android:layout_height="wrap_content"
         android:padding="15dp"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,7 +91,6 @@
             android:text="Set up my profile"
             android:padding="10dp"
             android:textSize="15sp"/>
-
     </LinearLayout>
 
     <ScrollView
@@ -106,6 +105,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

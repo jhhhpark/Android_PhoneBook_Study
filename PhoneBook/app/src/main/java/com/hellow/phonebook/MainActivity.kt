@@ -20,11 +20,13 @@ class MainActivity : AppCompatActivity() {
             "Hello", "James", "Park", "Sony", "June", "Kate",
             "Hello", "James", "Park", "Sony", "June", "Kate")
 
-        val numberList = arrayOf("123", "456", "789", "123", "456",
-            "123", "456", "789", "123", "456",
-            "123", "456", "789", "123", "456",
-            "123", "456", "789", "123", "456",
-            "123", "456", "789", "123")
+        val numberList = arrayOf("010-1234-5678","010-1234-5678","010-1234-5678",
+                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
+                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
+                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
+                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
+                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
+                "010-1234-5678")
 
         // 헤드네임 리스트 생성
         val headNameList = mutableListOf<String>()
@@ -54,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             val headName = phoneBook_ItemView.findViewById<TextView>(R.id.txHeadName)
             val fullName = phoneBook_ItemView.findViewById<TextView>(R.id.txFullName)
 
-            headName.text = phoneList[i].name
+            headName.text = headNameList[i]
             fullName.text = phoneList[i].phone
 
             // 컨테이너에 해당 item View를 붙인다
@@ -74,8 +76,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
-
-
 
     }
 }

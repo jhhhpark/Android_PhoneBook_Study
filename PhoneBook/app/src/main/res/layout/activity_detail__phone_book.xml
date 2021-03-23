@@ -71,8 +71,5 @@
             android:src="@drawable/comment"
             android:layout_gravity="center"/>
 
-
     </LinearLayout>
-
-
 </LinearLayout>
