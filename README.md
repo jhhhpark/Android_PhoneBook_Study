@@ -1,7 +1,7 @@
 # Android_PhoneBook_Study
 This is a phone book, an Android development app.
 
-## This is a Phone Book! Ver 1.1
+## This is a Phone Book! Ver 1.0
 
 ### I`m Junior Dev
 ------------------------------------------
@@ -9,6 +9,8 @@ This is a phone book, an Android development app.
 ### If you click on the phone number list you will see the detail page :)
 
 ---------------------------------------
+
+## This is a Phone Book! Ver 1.1
 
 ++ Today. 2021-03-24
 
