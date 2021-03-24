@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 
@@ -11,75 +12,68 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // 전화번호부(이름, 전화번호) 리스트 생성
-        val phoneList = ArrayList<NumberList>()
 
-        // 이름 및 전화번호 배열
-        val nameList = arrayOf("Hello", "James", "Park", "Sony", "June", "Kate",
-            "Hello", "James", "Park", "Sony", "June", "Kate",
-            "Hello", "James", "Park", "Sony", "June", "Kate",
-            "Hello", "James", "Park", "Sony", "June", "Kate")
+        // list생성 및 phoneBook생성
+        val phoneBook = createFakePhoneBook(20)
+        createPhoneBookList(phoneBook)
+    }
 
-        val numberList = arrayOf("010-1234-5678","010-1234-5678","010-1234-5678",
-                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
-                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
-                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
-                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
-                "010-1234-5678","010-1234-5678","010-1234-5678","010-1234-5678",
-                "010-1234-5678")
-
-        // 헤드네임 리스트 생성
-        val headNameList = mutableListOf<String>()
-
-        for(i in nameList.indices) {
-            headNameList.add(nameList[i].substring(0, 1))
+    // 생성 할 Person의 갯수를 입력하면 해당 갯수만큼 Person 인스턴스를 List에 추가 전화번호부를 return
+    fun createFakePhoneBook(fakeNumber: Int = 10, phoneBook: PhoneBook = PhoneBook()): PhoneBook {
+        for (i in 0 until fakeNumber) {
+            phoneBook.addPerson(
+                    Person("${i}번째 사람", "010-1234-567,${i}")
+            )
         }
+        return phoneBook
+    }
 
+    fun createPhoneBookList(phoneBook: PhoneBook) {
+        // 인플레이터와 아이템 뷰를 붙일 컨테이너 생성
+        val inflaterLayout = LayoutInflater.from(this@MainActivity)
+        val container = findViewById<LinearLayout>(R.id.containerView)
 
-        // 리스트에 이름과 전화번호 입력
-        for(i in nameList.indices) {
-            phoneList.add(NumberList(nameList[i], numberList[i]))
+        // headName과 phoneNumber 변수 생성 및 데이터 저장
+        for (i in 0 until phoneBook.personList.size) {
+            val itemView = layoutInflater.inflate(R.layout.numberlist_view, null)
+            val headName = itemView.findViewById<TextView>(R.id.txHeadName)
+            val phoneNumber = itemView.findViewById<TextView>(R.id.txHeadName)
+
+            headName.text = phoneBook.personList[i].name
+            phoneNumber.text = phoneBook.personList[i].number
+
+            // 생성한 itemView를 container에 addView
+            container.addView(itemView)
+
+            // 리스트 클릭 시 상세페이지 이동
+            detailPageOpen(phoneBook.personList[i], itemView)
+
         }
+    }
 
-        // itemView를 addView할 container와 inflater 생성
-        val container : LinearLayout = findViewById<LinearLayout>(R.id.containerView)
-        val inflater : LayoutInflater = this@MainActivity.layoutInflater
+    // 상세 페이지 생성 및 리스트 클릭 시 액티비티 전환
+    fun detailPageOpen(person: Person, view: View) {
+        view.setOnClickListener {
+            // 인텐트 생성 및 서브 액티비티 실행
+            val intent = Intent(this@MainActivity, Detail_PhoneBook::class.java)
+            intent.putExtra("Name", person.name)
+            intent.putExtra("Number", person.number)
 
-        // 상세 페이지 레이아웃 변수 생성
-        val detailPhoneBook = findViewById<LinearLayout>(R.id.detailPhoneBoook)
-
-        for(i in nameList.indices) {
-            // itemView를 phone_book_main의 LinearLayout에 붙임
-            val phoneBook_ItemView = inflater.inflate(R.layout.numberlist_view, container, false)
-
-            // 각각의 headName, Name을 TextView에 추가한다.
-            val headName = phoneBook_ItemView.findViewById<TextView>(R.id.txHeadName)
-            val fullName = phoneBook_ItemView.findViewById<TextView>(R.id.txFullName)
-
-            headName.text = headNameList[i]
-            fullName.text = phoneList[i].phone
-
-            // 컨테이너에 해당 item View를 붙인다
-            container.addView(phoneBook_ItemView)
-
-            phoneBook_ItemView.setOnClickListener {
-                // 상세페이지에 이름과 전화번호 데이터 전달
-                // 인텐트 생성
-                val intent = Intent(this, Detail_PhoneBook::class.java)
-
-                // 이름, 전화번호 데이터 인텐트에 저장
-                intent.apply {
-                    intent.putExtra("Name", phoneList[i].name)
-                    intent.putExtra("Phone", phoneList[i].phone)
-                }
-                // 인텐트 전달
-                startActivity(intent)
-            }
+            startActivity(intent)
         }
-
     }
 }
 
-// 전화번호 리스트 클래스
-class NumberList(val name: String, val phone: String) {
+// Person인스턴스 List를 가진 PhoneBook 클래스 선언
+class PhoneBook() {
+    val personList = ArrayList<Person>()
+    fun addPerson(person: Person) {
+        personList.add(person)
+    }
+}
+
+
+// 이름과 전화번호를 가진 Person클래스 선언
+class Person(val name: String, val number: String) {
+
 }
