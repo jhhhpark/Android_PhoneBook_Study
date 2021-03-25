@@ -27,3 +27,11 @@ UI improved, number and headname modified.
 improve structure, add ImageButton(Back MainActivity)
 
 ---------------------------------------
+
+## This is a Phone Book! Ver 1.3
+
+++ Today. 2021-03-25
+
+RecyclerView structure was applied
+
+---------------------------------------
